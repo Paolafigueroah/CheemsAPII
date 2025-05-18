@@ -14,7 +14,7 @@ class Trip:
         try:
             connection = get_connection()
             cursor = connection.cursor(dictionary=True)
-            cursor.execute('SELECT id, name, city, country, latitude, longitude FROM trips')
+            cursor.execute('SELECT id, name, city, country, latitude, longitude FROM trip')
             results = cursor.fetchall()
 
             for trip in results:
@@ -34,7 +34,7 @@ class Trip:
         try:
             connection = get_connection()
             cursor = connection.cursor()
-            cursor.execute('INSERT INTO trips (name, city, country, latitude, longitude) VALUES(%s,%s,%s,%s,%s)', 
+            cursor.execute('INSERT INTO trip (name, city, country, latitude, longitude) VALUES(%s,%s,%s,%s,%s)', 
                          (trip.name, trip.city, trip.country, trip.latitude, trip.longitude))
             connection.commit()
             return cursor.lastrowid
@@ -49,7 +49,7 @@ class Trip:
         try:
             connection = get_connection()
             cursor = connection.cursor()
-            query = 'UPDATE trips SET name = %s, city = %s, country = %s, latitude = %s, longitude = %s WHERE id = %s'
+            query = 'UPDATE trip SET name = %s, city = %s, country = %s, latitude = %s, longitude = %s WHERE id = %s'
             cursor.execute(query, (trip_data.name, trip_data.city, trip_data.country, trip_data.latitude, trip_data.longitude, trip_id))
             connection.commit()
             return cursor.rowcount > 0
@@ -64,7 +64,7 @@ class Trip:
         try: 
             connection = get_connection()
             cursor = connection.cursor()
-            cursor.execute('DELETE FROM trips WHERE id = %s', (trip_id, ))
+            cursor.execute('DELETE FROM trip WHERE id = %s', (trip_id, ))
             connection.commit()
             return cursor.rowcount > 0
         except Error as e:

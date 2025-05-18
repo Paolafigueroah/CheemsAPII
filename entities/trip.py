@@ -27,7 +27,7 @@ class Trip:
                 connection.close()
 
     @classmethod
-    def save(cls. trip):
+    def save(cls, trip):
         try:
             connection = get_connection()
             cursor = connection.cursor()

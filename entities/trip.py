@@ -72,3 +72,22 @@ class Trip:
         finally:
             cursor.close()
             connection.close()
+    @classmethod
+    def get_by_id(cls, trip_id):
+        try:
+            connection = get_connection()
+            cursor = connection.cursor(dictionary=True)
+            cursor.execute('SELECT id, name, city, country, latitude, longitude FROM trip WHERE id = %s', (trip_id,))
+            trip = cursor.fetchone()
+            
+            if trip:
+                trip['latitude'] = float(trip['latitude']) if trip['latitude'] not in (None, '', 'null') else 0.0
+                trip['longitude'] = float(trip['longitude']) if trip['longitude'] not in (None, '', 'null') else 0.0
+            
+            return trip
+        except Error as e:
+            print(str(e))
+            return None
+        finally:
+            cursor.close()
+            connection.close()
